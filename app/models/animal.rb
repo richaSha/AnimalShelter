@@ -1,8 +1,8 @@
 class Animal < ApplicationRecord
-  validates_presence_of :name, :species, :sex, :birthday
-  validate :birthday_valid
+  validates_presence_of :name, :species, :gender, :dob
+  validate :dob_valid
   validate :arrival_date_valid
-  before_save :confirm_arrival_date
+  before_save :save_arrival_date
 
   scope :random, -> { order('RANDOM()').first }
   scope :search, -> (search_term) { where(
@@ -13,25 +13,25 @@ class Animal < ApplicationRecord
   ) }
   scope :long_term, -> { where("arrival_date < ?", Date.today - 6.month) }
 
-  def birthday_valid
-    if birthday
-      unless (birthday < Date.today.next_day)
-        errors.add(:birthday, "can't be in the future")
+  def dob_valid
+    if dob
+      unless (dob < Date.today.next_day)
+        errors.add(:dob, "can't be in the future")
       end
     end
   end
 
   def arrival_date_valid
-    if birthday && arrival_date
-      if (arrival_date < birthday)
-        errors.add(:arrival_date, "can't be before birthday")
+    if (dob && arrival_date)
+      if (arrival_date < dob)
+        errors.add(:arrival_date, "Not a valid arrival date")
       elsif (arrival_date > Date.today.next_day)
-        errors.add(:arrival_date, "can't be in the future")
+        errors.add(:arrival_date, "Not a valid arrival date")
       end
     end
   end
 
-  def confirm_arrival_date
+  def save_arrival_date
     self.arrival_date ||= Date.today
   end
 end
