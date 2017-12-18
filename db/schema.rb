@@ -17,11 +17,11 @@ ActiveRecord::Schema.define(version: 20171218050923) do
 
   create_table "animals", force: :cascade do |t|
     t.string "name"
-    t.string "species"
     t.string "gender"
     t.datetime "dob"
-    t.string "description"
     t.datetime "arrival_date"
+    t.string "species"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

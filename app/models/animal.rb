@@ -2,7 +2,6 @@ class Animal < ApplicationRecord
   validates_presence_of :name, :species, :gender, :dob
   validate :dob_valid
   validate :arrival_date_valid
-  before_save :save_arrival_date
 
   scope :random, -> { order('RANDOM()').first }
   scope :search, -> (search_term) { where(
@@ -11,12 +10,11 @@ class Animal < ApplicationRecord
     "%#{search_term.downcase}%",
     "%#{search_term.downcase}%"
   ) }
-  scope :long_term, -> { where("arrival_date < ?", Date.today - 6.month) }
 
   def dob_valid
     if dob
       unless (dob < Date.today.next_day)
-        errors.add(:dob, "can't be in the future")
+        errors.add(:dob, "Future date cant be date of birth")
       end
     end
   end
@@ -31,7 +29,4 @@ class Animal < ApplicationRecord
     end
   end
 
-  def save_arrival_date
-    self.arrival_date ||= Date.today
-  end
 end

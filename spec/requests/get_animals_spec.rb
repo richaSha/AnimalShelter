@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "get all animals route", :type => :request do
-  let!(:quotes) { FactoryBot.create_list(:quote, 20)}
+  let!(:animals) { FactoryBot.create_list(:quote, 20)}
 
   before { get '/animals'}
 

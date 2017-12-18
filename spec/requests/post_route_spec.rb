@@ -3,18 +3,23 @@ require 'rails_helper'
 describe "post a animal route", :type => :request do
 
   before do
-    post '/animals', params: { :author => 'test_author', :content => 'test_content' }
+    post '/animals', params: { :name => 'Tommy', :species => 'Dog', :gender => 'Male', :dob => Date.today - 1.year, :description => 'A cute dog', :arrival_date => Date.today - 7.day }
   end
 
-  it 'returns the author name' do
-    expect(JSON.parse(response.body)['author']).to eq('test_author')
+  it 'returns the animal name' do
+    expect(JSON.parse(response.body)['name']).to eq('Tommy')
   end
 
-  it 'returns the quote content' do
-    expect(JSON.parse(response.body)['content']).to eq('test_content')
+  it 'returns the animal species' do
+    expect(JSON.parse(response.body)['species']).to eq('Dog')
+  end
+
+  it 'returns a animal gender' do
+    expect(JSON.parse(response.body)['gender']).to eq('Male')
   end
 
   it 'returns a created status' do
     expect(response).to have_http_status(:created)
   end
+  
 end

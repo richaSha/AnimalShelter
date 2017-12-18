@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :animals
+  namespace :api do
+    namespace :v1 do
+      get '/animals/random' => 'animals#random'
+      get '/animals/search' => 'animals#search'
+      resources :animals
+    end
+  end
 end
