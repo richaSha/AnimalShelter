@@ -14,6 +14,14 @@ Setup/Installation Requirements
 
 Run `rails server` for a dev server. Navigate to `http://localhost:3000/`. The app will automatically reload if you change any of the source files.
 
+##GET /animals
+Get a list of all animals.
+
+##GET /animals/{id}
+Get a single animal's record based on id.
+
+##GET /animals/random
+Get a random animal's record.
 
 ## Gemfile Installation
 

@@ -1,10 +1,6 @@
-class AnimalsController < ApplicationController
+class Api::V1::AnimalsController < Api::V1::BaseController
   def index
-      if params[:long_term] == 'true'
-        @animals = Animal.long_term
-      else
-        @animals = Animal.all
-      end
+      @animals = Animal.all
       json_response(@animals)
     end
 
@@ -14,20 +10,12 @@ class AnimalsController < ApplicationController
     end
 
     def random
-      if params[:long_term] == 'true'
-        @animal = Animal.long_term.random
-      else
-        @animal = Animal.random
-      end
+      @animal = Animal.random
       json_response(@animal)
     end
 
     def search
-      if params[:long_term] == 'true'
-        @search_results = Animal.long_term.search(params[:term])
-      else
-        @search_results = Animal.search(params[:term])
-      end
+      @search_results = Animal.search(params[:term])
       json_response(@search_results)
     end
 
@@ -35,7 +23,7 @@ class AnimalsController < ApplicationController
       @animal = Animal.create!(animal_params)
       json_response(
         {
-          "message": "Animal with id=#{@animal.id} created successfully.",
+          "message": "Animal list created successfully",
           "animal": @animal
         },
         :created
@@ -47,12 +35,12 @@ class AnimalsController < ApplicationController
       if @animal.update(animal_params)
         json_response(
           {
-            "message": "Animal with id=#{@animal.id} updated successfully.",
+            "message": "Animal list updated successfully",
             "animal": @animal
           }
         )
       else
-        json_response(@animal.errors, :unprocessable_entity)
+        json_response(@animal.errors)
       end
     end
 
@@ -60,7 +48,7 @@ class AnimalsController < ApplicationController
       @animal = Animal.find(params[:id])
       @animal.destroy
       json_response(
-        { "message": "Animal with id=#{@animal.id} deleted successfully." }
+        { "message": "Animal list deleted successfully" }
       )
     end
 
